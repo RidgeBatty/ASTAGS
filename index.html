@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>ASTAGS</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="ui.css">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/xml.min.js"></script>
+    </head>
+    <body>
+        <div class="bar-left">
+            <a-icon id="account">Account</a-icon>
+            <a-icon id="project">Project</a-icon>
+            <a-icon id="help">Help</a-icon>
+        </div>
+
+        <div class="container-right">
+            <div class="bar-top">
+                <div>Add File</div>
+                <div>Manage Files</div>
+                <div>Run</div>
+                <div>Search</div>
+                <div>Export</div>
+            </div>
+            <div id="workspace">
+                <custom-win>
+                    <h2>Main Text</h2>
+                    <div>
+                        <pre><code id="input-maintext"></code></pre>
+                    </div>
+                </custom-win>
+
+                <custom-win>
+                    <h2>Apparatus</h2>
+                    <div>
+                        <pre><code id="input-apparatus"></code></pre>
+                    </div>
+                </custom-win>
+
+                <custom-win>
+                    <h2>Output</h2>
+                    <div>
+                        <pre><code id="output-content"></code></pre>
+                    </div>
+                </custom-win>
+            </div>
+        </div>
+
+        <dialog id="dlg-account">
+            <h2>Account</h2>
+            <dialog-body>
+                <p>Account details</p>
+                <button autofocus>OK</button>
+            </dialog-body>            
+        </dialog>
+
+        <dialog id="dlg-project">
+            <h2>Project</h2>
+            <dialog-body>
+                <p>Project settings</p>
+                <button autofocus>OK</button>
+            </dialog-body>            
+        </dialog>
+
+        <dialog id="dlg-help">
+            <h2>Help</h2>
+            <dialog-body>
+                <p>Help</p>
+                <button autofocus>OK</button>
+            </dialog-body>            
+        </dialog>        
+
+        <script src="js/main.js" type="module"></script>
+    </body>
+</html>

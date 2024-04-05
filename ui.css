@@ -1,0 +1,141 @@
+html, body {
+    margin: 0;
+    position: absolute;
+    display: flex;
+    inset: 0;
+    font-family: arial;
+}
+
+.bar-left {
+    width:64px;
+    background-color:rgb(57, 57, 99);
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+}
+.bar-left > a-icon {
+    display: flex;    
+    position: relative;
+    width:64px;
+    height:72px;
+    background-size: 32px;    
+    font:bold 11px arial;
+    align-items: flex-end;
+    justify-content: center;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    filter:invert();      
+    cursor:pointer;      
+}
+.bar-left > a-icon:hover {
+    filter:invert() drop-shadow(0px 0px 3px white);
+}
+#account {
+    background-image: url(./icons/account.png);    
+}
+#project {
+    background-image: url(./icons/project.png);    
+}
+#help {
+    background-image: url(./icons/help.png);    
+}
+
+.container-right {
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 64px);
+}
+
+.bar-top {
+    display: flex;
+    height:64px;
+    background-color: silver;    
+    border-bottom:1px solid gray;
+    gap:10px;
+    
+}
+.bar-top > div {
+    border-right: 1px solid gray;
+    display: flex;
+    color: black;
+    height: 64px;
+    align-items: center;
+    justify-content: center;    
+    width: 12em;    
+    cursor:pointer;      
+}
+
+#workspace {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(252, 247, 236);
+    gap:10px;
+    padding:10px;        
+}
+#workspace > custom-win {
+    height: 400px;
+    border:1px solid gray;        
+    display: flex;
+    flex-direction: column;
+}
+#workspace > custom-win > h2 {
+    margin: 0;    
+    background-color:silver;
+    color:black;
+    padding:0.5em;    
+    font:12px arial;
+    cursor: pointer;
+}
+#workspace > custom-win > div {
+    flex:1;
+    overflow: auto;
+    background-color: whitesmoke;
+}
+#workspace > custom-win.maximized {
+    z-index: 1;
+    height:100%;
+    position: absolute;
+    left: 64px;
+    top: 64px;
+    bottom:0;
+    right:0;
+}
+#workspace > custom-win.maximized > h2 {
+    background-color: rgb(137, 90, 165);
+    color:white;
+}
+
+
+dialog {
+    flex-direction: column;
+    position: absolute;
+    inset:0;
+    padding:0;
+    border:1px solid black;
+    box-shadow: 0px 0px 16px 0px rgba(0,0,0,0.2);
+}
+dialog > h2 {
+    margin: 0;    
+    background-color:rgb(57, 57, 99);
+    color:white;
+    padding:0.25em 4em;
+}
+dialog-body {
+    display: flex;
+    flex-direction: column;
+    padding:8px;
+}
+dialog button {
+    background-color: rgb(177, 169, 201);
+    border:1px solid black;
+    padding:0.5em 3em;
+    margin:auto;
+}
+
+pre {
+    margin: 2px;
+}
+div pre code.hljs {
+    padding:0px;
+}
