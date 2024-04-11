@@ -1,0 +1,27 @@
+<style>
+table,th,td {
+    border:1px solid black
+}
+</style>
+<table>
+    <tr>
+        <th>Key</th>
+        <th>Value</th>
+    </tr>
+    <tr>
+        <td>Tag Name</td>
+        <td class="editable">blue</td>
+    </tr>
+    <tr>
+        <td>Attribute Name</td>
+        <td class="editable">red</td>
+    </tr>
+    <tr>
+        <td>String</td>
+        <td class="editable">darkviolet</td>
+    </tr>
+    <tr>
+        <td>Comment</td>
+        <td class="editable">gray</td>
+    </tr>
+</table>

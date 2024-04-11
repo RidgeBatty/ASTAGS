@@ -1,0 +1,51 @@
+<style>
+table,th,td {
+    border:1px solid black
+}
+</style>
+<table>
+    <tr>
+        <th>Key</th>
+        <th>Value</th>
+    </tr>
+    <tr>
+        <td>Whitespace</td>
+        <td class="editable">whitespace</td>
+    </tr>
+    <tr>
+        <td>Bracket, open</td>
+        <td class="editable">[</td>
+    </tr>
+    <tr>
+        <td>Bracket, close</td>
+        <td class="editable">]</td>
+    </tr>
+    <tr>
+        <td>Parenthesis, open</td>
+        <td class="editable">(</td>
+    </tr>
+    <tr>
+        <td>Parenthesis, close</td>
+        <td class="editable">)</td>
+    </tr>
+    <tr>
+        <td>Variation Unit</td>
+        <td class="editable">|</td>
+    </tr>
+    <tr>
+        <td>Entry</td>
+        <td class="editable">;</td>
+    </tr>
+    <tr>
+        <td>Asterisk</td>
+        <td class="editable">*</td>
+    </tr>
+    <tr>
+        <td>Dash</td>
+        <td class="editable">-</td>
+    </tr>
+    <tr>
+        <td>Prime</td>
+        <td class="editable">′´</td>
+    </tr>
+</table>

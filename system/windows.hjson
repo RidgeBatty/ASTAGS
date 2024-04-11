@@ -1,0 +1,27 @@
+[
+    { 
+        caption:'Input: Main Text'
+        name:'input-maintext'
+        url:'./input/gen-maintext.txt' 
+    }
+    { 
+        caption:'Input: Apparatus'
+        name:'input-apparatus'
+        url:'./input/gen-apparatus.txt' 
+    }
+    { 
+        caption:'Output: TEI XML'
+        name:'output-content'
+        url:'./output/output_gen.xml' 
+    }
+    { 
+        caption:'Settings: XML Styles'
+        name:'custom-xml-colors'
+        url:'./system/custom-xml-colors.tab' 
+    }
+    { 
+        caption:'Control: Token Separators'
+        name:'control-separators'
+        url:'./system/control-separators.tab' 
+    }
+]

@@ -5,7 +5,6 @@ html, body {
     inset: 0;
     font-family: arial;
 }
-
 .bar-left {
     width:64px;
     background-color:rgb(57, 57, 99);
@@ -52,7 +51,6 @@ html, body {
     height:64px;
     background-color: silver;    
     border-bottom:1px solid gray;
-    gap:10px;
     
 }
 .bar-top > div {
@@ -65,13 +63,17 @@ html, body {
     width: 12em;    
     cursor:pointer;      
 }
+.bar-top > div:hover {
+    background-color: gainsboro;
+}
 
 #workspace {
     display: flex;
     flex-direction: column;
     background-color: rgb(252, 247, 236);
     gap:10px;
-    padding:10px;        
+    padding:10px;  
+    overflow-y: auto;      
 }
 #workspace > custom-win {
     height: 400px;
@@ -87,10 +89,13 @@ html, body {
     font:12px arial;
     cursor: pointer;
 }
-#workspace > custom-win > div {
+#workspace > custom-win > .body {
     flex:1;
-    overflow: auto;
+    overflow: hidden;
     background-color: whitesmoke;
+}
+#workspace > custom-win.active > .body {
+    overflow-y: auto;
 }
 #workspace > custom-win.maximized {
     z-index: 1;
@@ -104,6 +109,13 @@ html, body {
 #workspace > custom-win.maximized > h2 {
     background-color: rgb(137, 90, 165);
     color:white;
+}
+#workspace > custom-win.active > h2 {
+    background-color: rgb(137, 90, 165);
+    color:white;
+}
+#workspace > custom-win.active > .body {
+    border:1px solid black;
 }
 
 
@@ -136,6 +148,10 @@ dialog button {
 pre {
     margin: 2px;
 }
+pre.hidden {
+    display: none;
+}
 div pre code.hljs {
     padding:0px;
+    overflow-x: hidden;
 }

@@ -8,9 +8,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="ui.css">
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+        <link rel="stylesheet" href="/css/default.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/xml.min.js"></script>
+        <script src="./js/hjson.min.js"></script>
     </head>
     <body>
         <div class="bar-left">
@@ -27,27 +28,8 @@
                 <div>Search</div>
                 <div>Export</div>
             </div>
-            <div id="workspace">
-                <custom-win>
-                    <h2>Main Text</h2>
-                    <div>
-                        <pre><code id="input-maintext"></code></pre>
-                    </div>
-                </custom-win>
 
-                <custom-win>
-                    <h2>Apparatus</h2>
-                    <div>
-                        <pre><code id="input-apparatus"></code></pre>
-                    </div>
-                </custom-win>
-
-                <custom-win>
-                    <h2>Output</h2>
-                    <div>
-                        <pre><code id="output-content"></code></pre>
-                    </div>
-                </custom-win>
+            <div id="workspace">                
             </div>
         </div>
 
