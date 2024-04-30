@@ -1,101 +1,90 @@
-import { makeTableEditable } from "./htmlhelp.js";
-import { ID, addElem, getJSON } from "./utils.js";
-
-export const onEditCustomColorsTableCell = (cell, newValue) => {
-    const rowIndex = cell.parentNode.rowIndex;
-    const ss       = document.styleSheets[1];
-    if (rowIndex == 1) ss.cssRules[6].style.color  = newValue; // name
-    if (rowIndex == 2) ss.cssRules[5].style.color  = newValue; // attr                    
-    if (rowIndex == 3) ss.cssRules[8].style.color  = newValue; // string
-    if (rowIndex == 4) ss.cssRules[3].style.color  = newValue; // comment
-}
-
-const getPageInfo = (pages) => {
-    let lastVisible = null, firstVisible = null, visiblePages = 0;
-    for (const p of pages) {
-        if (!p.classList.contains('hidden')) {
-            if (firstVisible == null) firstVisible = p;
-            lastVisible = p;        
-            visiblePages++;
-        }
-    }
-    return { firstVisible, lastVisible, visiblePages };
-}
-
-const makePagedWindow = (body, data) => {    
-    const linesPerPage = 400;
-    let currentPage    = 0;
-
-    body.addEventListener('scrollend', e => {         
-        if (body.scrollTop == 0) {            
-            const p = getPageInfo(pages);
-            if (p.firstVisible != pages[0]) {
-                const i = pages.indexOf(p.firstVisible);
-                pages[i - 1].classList.remove('hidden');                                        // show previous page
-                hljs.highlightElement(pages[i - 1].querySelector('code'));
-                if (p.visiblePages == 2) pages[i + 1].classList.add('hidden');                  // hide next page
-                body.scrollTo(0, pages[i].scrollHeight - 1);                                    // scroll to bottom of the new visible page
-            }            
-            return
-        }
-        if (body.offsetHeight + body.scrollTop >= body.scrollHeight) {
-            const p = getPageInfo(pages);
-            if (p.lastVisible != pages.at(-1)) {
-                const i = pages.indexOf(p.lastVisible);
-                pages[i + 1].classList.remove('hidden');                                        // show next page
-                hljs.highlightElement(pages[i + 1].querySelector('code'));
-                if (p.visiblePages == 2) pages[i - 1].classList.add('hidden');                  // hide previous page
-            }
-        }
-    });
-
-    const lines     = data.split('\n');
-    const pageCount = Math.ceil(lines.length / linesPerPage);
-    const pages     = [];
-        
-    for (let i = 0; i < pageCount; i++) {        
-        const ofs  = i * linesPerPage;
-        const page = addElem({ parent:body, tagName:'pre' });
-        const code = addElem({ parent:page, tagName:'code', text:lines.slice(ofs, ofs + linesPerPage).join('\n') });        
-        pages.push(page);
-
-        if (i > 0) page.classList.add('hidden');
-            else hljs.highlightElement(code);
-    }        
-}
-
-const loadContent = async (windowData) => {        
-    const { url } = windowData;
-
-    const data = await fetch(url).then(t => t.text());
-    const ws   = ID('workspace');
-    const win  = addElem({ parent:ws,  tagName:'custom-win' });
-    const head = addElem({ parent:win, tagName:'h2' });
-    const body = addElem({ parent:win, tagName:'div', class:'body' });
-
-    head.textContent = windowData.caption + ' (' + windowData.url + ')';
-    
-    if (url.endsWith('.tab')) {
-        const pre  = addElem({ parent:body, tagName:'pre' });
-        const code = addElem({ parent:pre, tagName:'code' });
-        makeTableEditable(code, data, onEditCustomColorsTableCell);
-    } 
-    if (url.endsWith('.xml')) {         
-        makePagedWindow(body, data);
-    } 
-    if (url.endsWith('.txt')) {         
-        const pre  = addElem({ parent:body, tagName:'pre' });
-        const code = addElem({ parent:pre, tagName:'code' });
-        code.textContent = data;
-    }
-}
+import { TWindow } from "./twindow.js";
+import { ID, addElem, addEvent, getJSON } from "./utils.js";
 
 const deactiveWindows = (w) => { w.forEach(f => f.classList.remove('active')); }
 
-const loadEditorWindowContents = async () => {        
+const loadEditorWindowContents = async () => {            
     const winData = await getJSON('./system/windows.hjson');
-    for (const w of winData) await loadContent(w);
-    return ID('workspace').querySelectorAll('custom-win');
+    const windows = [];
+    for (const w of winData) {
+        const win = new TWindow('workspace');
+        await win.loadContent(w);
+        windows.push(win);
+    }
+    return windows;
+}
+
+const updateWindowsMenu = (windows) => {    
+    const tabWindows = ID('tab-windows');
+    tabWindows.children[1].replaceChildren();       // remove all child elements
+    windows.forEach(f => { 
+        const text = f.caption.textContent.split('(')[0]; 
+        addElem({ parent:tabWindows.children[1], text });
+    });
+    addEvent(tabWindows, 'click', e => { console.log(e.target.textContent); });
+}
+
+const runTokenizer = (windows) => {
+    let main, app, sepa;
+    for (const w of windows) {        
+        if (w.caption.textContent.includes('Input: Main Text')) { main = w }
+        if (w.caption.textContent.includes('Input: Apparatus')) { app = w }
+        if (w.caption.textContent.includes('Control: Token Separators')) { sepa = w }
+    }
+    const sd = sepa.data;        
+    const se = Object.entries(sd);
+
+    const result = [];
+
+    const internalLexicalAnalysis = (acc) => {                
+        if (parseInt(acc) == acc) return 'Number';
+        if (parseInt(acc) + 'o' == acc) return 'Ordinal';
+        if (/^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$/.test(acc)) return 'Alphanumeric';         // at least one number and one character
+        if (/\p{Script=Greek}/u.test(acc)) return 'Greek';                    
+        if (/\p{Script=Latin}/u.test(acc)) {
+            if (/^M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/.test(acc)) return 'Roman numeral'
+            return 'Latin';
+        }
+        if (/\p{Script=Hebrew}/u.test(acc)) return 'Hebrew'; 
+    }
+
+    const checkContiguous = () => {
+        if (acc != '') {            
+            const o = { v:acc };            
+            const t = internalLexicalAnalysis(acc);
+            if (t) o.t = t;
+            result.push(o);
+            acc = '';
+        }
+    }
+
+    const findMatchingSeparator = (ch) => {
+        return se.findIndex(f => { 
+            if (f[0] == 'Whitespace') return false;
+            const re = f[1].length == 1 ? new RegExp('\\' + f[1], 'i') : new RegExp('[\\' + f[1] + ']', 'i'); 
+            return re.test(ch); 
+        });
+    }
+    
+    let acc = '';
+    for (const ch of app.content) {            
+        if (ch.trim() == 0) {
+            checkContiguous();
+            continue;
+        }
+                
+        const fIndex = findMatchingSeparator(ch);             // find matching separator        
+        if (fIndex > -1) {                                             
+            checkContiguous();
+            result.push({ v:ch, s:se[fIndex][0] });
+        } else 
+            acc += ch;
+    }
+    checkContiguous();
+
+    console.log(result);
+
+    console.log('Running tokenizer...');
 }
 
 const main = async () => {
@@ -115,9 +104,15 @@ const main = async () => {
 
     const windows = await loadEditorWindowContents();
     for (const w of windows) {
-        w.querySelector('h2').addEventListener('dblclick', e => { w.classList.toggle('maximized'); });
-        w.addEventListener('click', e => { deactiveWindows(windows); w.classList.add('active'); });
+        w.head.addEventListener('dblclick', e => { w.classList.toggle('maximized'); });
+        w.elem.addEventListener('click', e => { deactiveWindows(windows); w.classList.add('active'); });
     }
+
+    updateWindowsMenu(windows);
+    
+    addEvent('tab-run', 'click', e => { 
+        if (e.target.textContent == 'Run Tokenizer') runTokenizer(windows);
+    });
 }
 
 main();

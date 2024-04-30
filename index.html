@@ -22,11 +22,28 @@
 
         <div class="container-right">
             <div class="bar-top">
-                <div>Add File</div>
-                <div>Manage Files</div>
-                <div>Run</div>
-                <div>Search</div>
-                <div>Export</div>
+                <tab-button><span>File</span>
+                    <div>                        
+                        <div>New text file</div>
+                        <div>New input file</div>
+                        <div>New output file</div>
+                        <div></div>
+                        <div>Open from disk...</div>
+                        <div>Drag and drop</div>
+                        <div></div>
+                        <div>File mananger</div>                        
+                    </div>
+                </tab-button>
+                <tab-button id="tab-run">
+                    <span>Run</span>
+                    <div>
+                        <div>Run Tokenizer</div>
+                        <div>Run Tagger</div>
+                    </div>
+                </tab-button>
+                <tab-button><span>Search</span><div></div></tab-button>    
+                <tab-button><span>Export</span><div></div></tab-button>
+                <tab-button id="tab-windows"><span>Windows</span><div></div></tab-button>
             </div>
 
             <div id="workspace">                

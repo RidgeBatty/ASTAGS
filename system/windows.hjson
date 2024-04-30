@@ -10,6 +10,10 @@
         url:'./input/gen-apparatus.txt' 
     }
     { 
+        caption:'Output: Tokenizer'
+        name:'output-tokenizer'        
+    }
+    { 
         caption:'Output: TEI XML'
         name:'output-content'
         url:'./output/output_gen.xml' 

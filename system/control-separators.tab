@@ -45,7 +45,35 @@ table,th,td {
         <td class="editable">-</td>
     </tr>
     <tr>
+        <td>Punctuation</td>
+        <td class="editable">,.:</td>
+    </tr>
+    <tr>
+        <td>Apostrophe</td>
+        <td class="editable">'’</td>
+    </tr>
+    <tr>
         <td>Prime</td>
         <td class="editable">′´</td>
     </tr>
+    <tr>
+        <td>Down arrow</td>
+        <td class="editable">↓</td>
+    </tr>
+    <tr>
+        <td>Addition</td>
+        <td class="editable">+</td>
+    </tr>
+    <tr>
+        <td>Omission</td>
+        <td class="editable">&gt;</td>
+    </tr>
+    <tr>
+        <td>Homtel</td>
+        <td class="editable">◠</td>
+    </tr>    
+    <tr>
+        <td>Number Sign</td>
+        <td class="editable">#</td>
+    </tr>    
 </table>
