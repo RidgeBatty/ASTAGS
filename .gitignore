@@ -1,2 +1,5 @@
 .vscode
 coverage
+
+# includes private information
+/docs/research/
