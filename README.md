@@ -38,6 +38,7 @@ The first engineering objective is a lossless, configurable tokenizer and a smal
 
 - [Project description and goals](docs/PROJECT.md) — scientific objectives, architecture, research workflows, requirements, scope and development roadmap.
 - [Development and agent instructions](AGENTS.md) — mandatory working principles for contributors and coding agents.
+- [Milestone 1 — First working webapp](docs/milestones/M01.md) — proposed v0.1.0 scope, development passes and release criteria.
 - Historical prototype: [jobpurho/astags](https://github.com/jobpurho/astags) (a 30 May 2020 snapshot is available in the project source materials).
 
 ## Research provenance and licensing
