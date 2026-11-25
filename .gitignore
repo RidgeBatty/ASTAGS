@@ -2,4 +2,4 @@
 coverage
 
 # includes private information
-/docs/research/
+docs/research
